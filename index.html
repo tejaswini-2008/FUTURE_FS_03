@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L'Ambroisie | Fine Dining Restaurant</title>
+    <style>
+        /* --- DESIGN SYSTEM & VARIABLES --- */
+        :root {
+            --bg-dark: #0c0d10;
+            --bg-surface: #16171c;
+            --primary-gold: #c5a880;
+            --primary-gold-hover: #b39369;
+            --text-light: #f5f5f7;
+            --text-muted: #9a9a9e;
+            --font-serif: 'Playfair Display', Georgia, serif;
+            --font-sans: 'Inter', system-ui, sans-serif;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        /* --- BASE STYLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- NAVIGATION --- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(12, 13, 16, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(197, 168, 128, 0.1);
+            transition: var(--transition);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-serif);
+            font-size: 1.8rem;
+            color: var(--primary-gold);
+            text-decoration: none;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: var(--transition);
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--primary-gold);
+        }
+
+        /* --- HERO SECTION --- */
+        #home {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.85)), 
+                        url('https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .hero-content h1 {
+            font-family: var(--font-serif);
+            font-size: 4rem;
+            color: var(--text-light);
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        .hero-content h1 span {
+            color: var(--primary-gold);
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 40px;
+            font-style: italic;
+        }
+
+        .btn-gold {
+            display: inline-block;
+            background: var(--primary-gold);
+            color: var(--bg-dark);
+            padding: 15px 35px;
+            text-decoration: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 4px;
+            transition: var(--transition);
+            border: 1px solid var(--primary-gold);
+            cursor: pointer;
+        }
+
+        .btn-gold:hover {
+            background: transparent;
+            color: var(--primary-gold);
+        }
+
+        /* --- SECTION COMMONS --- */
+        section {
+            padding: 100px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-family: var(--font-serif);
+            font-size: 2.8rem;
+            margin-bottom: 60px;
+            letter-spacing: 1px;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 2px;
+            background: var(--primary-gold);
+            margin: 20px auto 0;
+        }
+
+        /* --- ABOUT SECTION --- */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about-text h3 {
+            font-family: var(--font-serif);
+            font-size: 1.8rem;
+            color: var(--primary-gold);
+            margin-bottom: 20px;
+        }
+
+        .about-text p {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            font-size: 1.05rem;
+        }
+
+        .about-image img {
+            width: 100%;
+            height: 450px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            border: 1px solid rgba(197, 168, 128, 0.2);
+        }
+
+        /* --- MENU SECTION --- */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .menu-card {
+            background: var(--bg-surface);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(197, 168, 128, 0.3);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        .menu-img-wrapper {
+            position: relative;
+            height: 240px;
+            overflow: hidden;
+        }
+
+        .menu-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .menu-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .menu-info {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            gap: 10px;
+        }
+
+        .menu-title {
+            font-family: var(--font-serif);
+            font-size: 1.3rem;
+            color: var(--text-light);
+        }
+
+        .menu-price {
+            color: var(--primary-gold);
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        .menu-desc {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        .btn-sm-order {
+            background: transparent;
+            border: 1px solid var(--primary-gold);
+            color: var(--primary-gold);
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            width: 100%;
+            transition: var(--transition);
+        }
+
+        .btn-sm-order:hover {
+            background: var(--primary-gold);
+            color: var(--bg-dark);
+        }
+
+        /* --- INTERACTIVE ORDER SECTION --- */
+        #order {
+            background: var(--bg-surface);
+            border-radius: 12px;
+            padding: 60px 40px;
+            border: 1px solid rgba(197, 168, 128, 0.1);
+            margin-top: 40px;
+            margin-bottom: 100px;
+        }
+
+        .order-container {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 50px;
+        }
+
+        .order-form-group {
+            margin-bottom: 20px;
+        }
+
+        .order-form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .order-form-group input, .order-form-group select {
+            width: 100%;
+            padding: 14px;
+            background: var(--bg-dark);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: var(--text-light);
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .order-form-group input:focus {
+            outline: none;
+            border-color: var(--primary-gold);
+        }
+
+        .summary-panel {
+            background: rgba(12, 13, 16, 0.5);
+            border-radius: 8px;
+            padding: 30px;
+            border: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .summary-title {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+            color: var(--primary-gold);
+        }
+
+        .cart-items {
+            max-height: 240px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+            padding-right: 5px;
+        }
+
+        .cart-item-remove {
+            background: transparent;
+            border: none;
+            color: #ff5252;
+            cursor: pointer;
+            margin-left: 10px;
+            font-size: 0.8rem;
+        }
+
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 700;
+            font-size: 1.3rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 15px;
+            margin-bottom: 25px;
+        }
+
+        /* --- CONTACT SECTION --- */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            text-align: center;
+        }
+
+        .contact-card {
+            background: var(--bg-surface);
+            padding: 40px 20px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.02);
+        }
+
+        .contact-card h3 {
+            font-family: var(--font-serif);
+            color: var(--primary-gold);
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+        }
+
+        .contact-card p {
+            color: var(--text-muted);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background: #08090b;
+            text-align: center;
+            padding: 40px 20px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            border-top: 1px solid rgba(255,255,255,0.02);
+        }
+
+        /* --- RESPONSIVE ADAPTATIONS --- */
+        @media (max-width: 768px) {
+            .nav-container { flex-direction: column; gap: 15px; }
+            .hero-content h1 { font-size: 2.8rem; }
+            .about-grid, .order-container { grid-template-columns: 1fr; }
+            .about-image img { height: 300px; }
+            #order { padding: 30px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGATION HEADER -->
+    <header id="header">
+        <div class="nav-container">
+            <a href="#home" class="logo">L'AMBROISIE</a>
+            <nav>
+                <ul>
+                    <li><a href="#home" class="nav-link active">Home</a></li>
+                    <li><a href="#about" class="nav-link">About</a></li>
+                    <li><a href="#menu" class="nav-link">Menu</a></li>
+                    <li><a href="#order" class="nav-link">Order</a></li>
+                    <li><a href="#contact" class="nav-link">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section id="home" style="max-width: 100%; padding: 0;">
+        <div class="hero-content">
+            <h1>Culinary <span>Artistry</span></h1>
+            <p>An extraordinary journey of flavors crafted by Michelin-starred culinary visionaries.</p>
+            <a href="#menu" class="btn-gold">Explore The Menu</a>
+        </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section id="about">
+        <h2 class="section-title">Our Story</h2>
+        <div class="about-grid">
+            <div class="about-text">
+                <h3>A Passion For Perfection</h3>
+                <p>Founded in the heart of metropolitan elegance, L'Ambroisie honors centuries-old traditions while boldly re-imagining flavors through innovative global techniques.</p>
+                <p>Every single ingredient is hyper-locally sourced daily, ensuring that what arrives on your plate is a pristine reflection of the season's purest bounties.</p>
+            </div>
+            <div class="about-image">
+                <img src="https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?auto=format&fit=crop&w=800&q=80" alt="Chef placing garnish delicately on a gourmet meal layout">
+            </div>
+        </div>
+    </section>
+
+    <!-- MENU SECTION -->
+    <section id="menu">
+        <h2 class="section-title">The Menu</h2>
+        <div class="menu-grid">
+            
+            <!-- Item 1 -->
+            <div class="menu-card">
+                <div class="menu-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80" alt="Salmon Salad Bowl">
+                </div>
+                <div class="menu-info">
+                    <div class="menu-header">
+                        <span class="menu-title">Glazed Salmon Crudo</span>
+                        <span class="menu-price">$28</span>
+                    </div>
+                    <p class="menu-desc">Atlantic salmon, citrus-infused glaze, organic microgreens, toasted sesame oil tincture.</p>
+                    <button class="btn-sm-order" onclick="addToCart('Glazed Salmon Crudo', 28)">Order Now</button>
+                </div>
+            </div>
+
+            <!-- Item 2 -->
+            <div class="menu-card">
+                <div class="menu-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=600&q=80" alt="Gourmet Woodfired Pizza">
+                </div>
+                <div class="menu-info">
+                    <div class="menu-header">
+                        <span class="menu-title">Truffle Margerita</span>
+                        <span class="menu-price">$24</span>
+                    </div>
+                    <p class="menu-desc">House-kneaded sourdough base, fresh buffalo mozzarella, shaved black winter truffle, wild basil.</p>
+                    <button class="btn-sm-order" onclick="addToCart('Truffle Margerita', 24)">Order Now</button>
+                </div>
+            </div>
+
+            <!-- Item 3 -->
+            <div class="menu-card">
+                <div class="menu-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?auto=format&fit=crop&w=600&q=80" alt="Fluffy Stacked Pancakes">
+                </div>
+                <div class="menu-info">
+                    <div class="menu-header">
+                        <span class="menu-title">Brioche Honey Stack</span>
+                        <span class="menu-price">$18</span>
+                    </div>
+                    <p class="menu-desc">Golden brioche pillows layered with organic raw honeycomb butter and fresh orchard berries.</p>
+                    <button class="btn-sm-order" onclick="addToCart('Brioche Honey Stack', 18)">Order Now</button>
+                </div>
+            </div>
+
+            <!-- Item 4 -->
+            <div class="menu-card">
+                <div class="menu-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=600&q=80" alt="Premium Meat Skewers">
+                </div>
+                <div class="menu-info">
+                    <div class="menu-header">
+                        <span class="menu-title">A5 Wagyu Skewers</span>
+                        <span class="menu-price">$54</span>
+                    </div>
+                    <p class="menu-desc">Melt-in-your-mouth charcoal-seared Wagyu cubes drizzled with aged sweet soy reduction.</p>
+                    <button class="btn-sm-order" onclick="addToCart('A5 Wagyu Skewers', 54)">Order Now</button>
+                </div>
+            </div>
+
+            <!-- Item 5 -->
+            <div class="menu-card">
+                <div class="menu-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=600&q=80" alt="Superfood Medley Salad">
+                </div>
+                <div class="menu-info">
+                    <div class="menu-header">
+                        <span class="menu-title">Harvest Green Salad</span>
+                        <span class="menu-price">$19</span>
+                    </div>
+                    <p class="menu-desc">Organic kale, ancient grains, creamy avocado cream, pomegranate seeds, orange zesty vinaigrette.</p>
+                    <button class="btn-sm-order" onclick="addToCart('Harvest Green Salad', 19)">Order Now</button>
+                </div>
+            </div>
+
+            <!-- Item 6 -->
+            <div class="menu-card">
+                <div class="menu-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1484723091739-30a097e8f929?auto=format&fit=crop&w=600&q=80" alt="Artisanal Berry Toast">
+                </div>
+                <div class="menu-info">
+                    <div class="menu-header">
+                        <span class="menu-title">Mascarpone Berry Toast</span>
+                        <span class="menu-price">$16</span>
+                    </div>
+                    <p class="menu-desc">Thick-cut country bread smeared with whipped vanilla sweet mascarpone and macerated figs.</p>
+                    <button class="btn-sm-order" onclick="addToCart('Mascarpone Berry Toast', 16)">Order Now</button>
+                </div>
+            </div>
+
+            <!-- Item 7 -->
+            <div class="menu-card">
+                <div class="menu-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1529042410759-befb1204b468?auto=format&fit=crop&w=600&q=80" alt="Gourmet Meatballs">
+                </div>
+                <div class="menu-info">
+                    <div class="menu-header">
+                        <span class="menu-title">Veal Polpette</span>
+                        <span class="menu-price">$26</span>
+                    </div>
+                    <p class="menu-desc">Slow-braised tender veal meatballs in a rich roasted heirloom San Marzano tomato sauce base.</p>
+                    <button class="btn-sm-order" onclick="addToCart('Veal Polpette', 26)">Order Now</button>
+                </div>
+            </div>
+
+            <!-- Item 8 -->
+            <div class="menu-card">
+                <div class="menu-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=600&q=80" alt="Pesto Genovese Pasta">
+                </div>
+                <div class="menu-info">
+                    <div class="menu-header">
+                        <span class="menu-title">Wild Ramp Pesto Pasta</span>
+                        <span class="menu-price">$23</span>
+                    </div>
+                    <p class="menu-desc">Artisanal bronze-die cut trofie swirled in cold-pressed pine nut and wild ramp garlic pesto.</p>
+                    <button class="btn-sm-order" onclick="addToCart('Wild Ramp Pesto Pasta', 23)">Order Now</button>
+                </div>
+            </div>
+
+            <!-- Item 9 -->
+            <div class="menu-card">
+                <div class="menu-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=600&q=80" alt="Handcrafted Dumplings">
+                </div>
+                <div class="menu-info">
+                    <div class="menu-header">
+                        <span class="menu-title">Imperial Prawn Xiao Long Bao</span>
+                        <span class="menu-price">$22</span>
+                    </div>
+                    <p class="menu-desc">Delicate hand-pleated broth dumplings filled with minced sweet prawns and scallion infusion.</p>
+                    <button class="btn-sm-order" onclick="addToCart('Imperial Prawn Xiao Long Bao', 22)">Order Now</button>
+                </div>
+            </div>
+
+            <!-- Item 10 -->
+            <div class="menu-card">
+                <div class="menu-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=600&q=80" alt="Glazed Chocolate Donut Dessert">
+                </div>
+                <div class="menu-info">
+                    <div class="menu-header">
+                        <span class="menu-title">Dark Velvet Ganache Ring</span>
+                        <span class="menu-price">$15</span>
+                    </div>
+                    <p class="menu-desc">70% single-origin Venezuelan dark chocolate glaze over an airy, classic artisan pastry structure.</p>
+                    <button class="btn-sm-order" onclick="addToCart('Dark Velvet Ganache Ring', 15)">Order Now</button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ORDER SECTION -->
+    <section id="order">
+        <h2 class="section-title">Order Your Dish</h2>
+        <div class="order-container">
+            <!-- Order Details Input Form -->
+            <form id="checkoutForm" onsubmit="handleCheckout(event)">
+                <div class="order-form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" required placeholder="Enter your full name">
+                </div>
+                <div class="order-form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" required placeholder="e.g., +1 (555) 000-0000">
+                </div>
+                <div class="order-form-group">
+                    <label for="diningType">Order Type</label>
+                    <select id="diningType">
+                        <option value="delivery">Premium Home Delivery</option>
+                        <option value="pickup">Curbside Pickup</option>
+                        <option value="dinein">Table Reservation Pre-order</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-gold" style="width: 100%; margin-top: 10px;">Place Your Order</button>
+            </form>
+
+            <!-- Dynamic Cart & Summary Panel -->
+            <div class="summary-panel">
+                <div>
+                    <h3 class="summary-title">Your Selected Dishes</h3>
+                    <div class="cart-items" id="cartItemsList">
+                        <p style="color: var(--text-muted); font-style: italic;" id="emptyCartMessage">No dishes selected yet. Click "Order Now" on the menu above to build your meal.</p>
+                    </div>
+                </div>
+                <div>
+                    <div class="summary-total">
+                        <span>Total Bill:</span>
+                        <span id="totalBillPrice">$0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact">
+        <h2 class="section-title">Connect With Us</h2>
+        <div class="contact-grid">
+            <div class="contact-card">
+                <h3>Our Location</h3>
+                <p>452 Avenue des Champs-Élysées</p>
+                <p>Paris, France</p>
+            </div>
+            <div class="contact-card">
+                <h3>Hours of Operation</h3>
+                <p>Monday - Sunday</p>
+                <p>12:00 PM - 11:00 PM</p>
+            </div>
+            <div class="contact-card">
+                <h3>Reservations</h3>
+                <p>concierge@lambroisie.com</p>
+                <p>+33 1 42 77 68 88</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2026 L'Ambroisie. Built with uncompromising luxury and design.</p>
+    </footer>
+
+    <!-- INTERACTIVE JAVASCRIPT SYSTEM -->
+    <script>
+        // Shopping Cart Memory State
+        let cart = [];
+        let totalBill = 0;
+
+        // Function: Add Selected Item to Order Panel
+        function addToCart(itemName, itemPrice) {
+            // Add item to array
+            cart.push({ name: itemName, price: itemPrice });
+            updateCartUI();
+            
+            // Auto-scroll slightly toward order section to showcase dynamic addition behavior
+            const orderSection = document.getElementById('order');
+            if (cart.length === 1) {
+                orderSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+
+        // Function: Remove Item from Order Panel
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+        }
+
+        // Function: Synchronize Memory with Visual UI Structure
+        function updateCartUI() {
+            const cartItemsList = document.getElementById('cartItemsList');
+            const totalBillPrice = document.getElementById('totalBillPrice');
+            
+            // Reset contents
+            cartItemsList.innerHTML = '';
+            totalBill = 0;
+
+            if (cart.length === 0) {
+                cartItemsList.innerHTML = '<p style="color: var(--text-muted); font-style: italic;" id="emptyCartMessage">No dishes selected yet. Click "Order Now" on the menu above to build your meal.</p>';
+                totalBillPrice.innerText = '$0';
+                return;
+            }
+
+            // Loop through selected items and build DOM entries dynamically
+            cart.forEach((item, index) => {
+                totalBill += item.price;
+                
+                const itemRow = document.createElement('div');
+                itemRow.className = 'cart-item';
+                itemRow.innerHTML = `
+                    <span>${item.name} <span style="color: var(--primary-gold)">($${item.price})</span></span>
+                    <button class="cart-item-remove" onclick="removeFromCart(${index})">Remove</button>
+                `;
+                cartItemsList.appendChild(itemRow);
+            });
+
+            // Render final pricing calculation
+            totalBillPrice.innerText = `$${totalBill}`;
+        }
+
+        // Function: Form Submission Handler
+        function handleCheckout(event) {
+            event.preventDefault(); // Stop standard browser page-refreshing defaults
+            
+            const name = document.getElementById('fullName').value;
+            const diningType = document.getElementById('diningType').value;
+
+            if (cart.length === 0) {
+                alert("Your order summary is empty! Please choose at least one dish from our Menu before checking out.");
+                return;
+            }
+
+            // Mock successful transaction presentation
+            alert(`Thank you, ${name}! Your luxury culinary order for ${diningType} has been confirmed.\nTotal Bill: $${totalBill}\nOur chefs are now hand-preparing your selection.`);
+            
+            // Clean slate recovery
+            cart = [];
+            document.getElementById('checkoutForm').reset();
+            updateCartUI();
+        }
+
+        // Visual Quality Highlight: Header Solid/Blur Shift on Scroll 
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.style.background = 'rgba(12, 13, 16, 0.98)';
+                header.style.padding = '10px 0';
+            } else {
+                header.style.background = 'rgba(12, 13, 16, 0.85)';
+                header.style.padding = '0';
+            }
+
+            // Active Class Link Switching dynamically while reading
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            let currentSectionId = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (window.scrollY >= sectionTop - 150) {
+                    currentSectionId = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(currentSectionId)) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
